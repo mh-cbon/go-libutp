@@ -193,7 +193,8 @@ func (c *Conn) Write(b []byte) (n int, err error) {
 
 func (c *Conn) RemoteAddr() net.Addr {
 	var rsa syscall.RawSockaddrAny
-	var addrlen C.socklen_t = syscall.SizeofSockaddrAny
+	var addrlen C.socklen_t = C.socklen_t(unsafe.Sizeof(&rsa))
+	// var addrlen C.socklen_t = syscall.SizeofSockaddrAny
 	C.utp_getpeername(c.s, (*C.struct_sockaddr)(unsafe.Pointer(&rsa)), &addrlen)
 	sa, err := anyToSockaddr(&rsa)
 	if err != nil {
