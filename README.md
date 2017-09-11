@@ -1,5 +1,6 @@
 [![travis Status](https://travis-ci.org/anacrolix/go-libutp.svg?branch=master)](https://travis-ci.org/anacrolix/go-libutp)
 [![Appveyor Status](https://ci.appveyor.com/api/projects/status/github/anacrolix/go-libutp?branch=master&svg=true)](https://ci.appveyor.com/project/anacrolix/go-libutp)
+[![codecov](https://codecov.io/gh/mh-cbon/go-libutp/branch/test/graph/badge.svg)](https://codecov.io/gh/mh-cbon/go-libutp)
 [![Go Report Card](https://goreportcard.com/badge/github.com/anacrolix/go-libutp)](https://goreportcard.com/report/github.com/anacrolix/go-libutp)
 [![GoDoc](https://godoc.org/github.com/anacrolix/go-libutp?status.svg)](http://godoc.org/github.com/anacrolix/go-libutp)
 [![MIT License](http://img.shields.io/badge/License-MIT-green.svg)](LICENSE)

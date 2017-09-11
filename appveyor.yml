@@ -3,8 +3,11 @@ image:
 
 environment:
   GOPATH: c:\gopath
+  CODECOV_TOKEN:
+    secure: XEaNzAiirCwbM09u6j8vnaEHXVdoZRvxJ2Wqee7JqcH7c7xXAaJpK5K7DIi8y/xx
 
 install:
+  - pip install codecov
   - set PATH=%GOPATH%\bin;%PATH%
   - set PATH=C:\msys64\mingw64\bin;%PATH%
   - go get github.com/anacrolix/envpprof
@@ -15,4 +18,5 @@ build_script:
   - go build -v -x -a
 
 before_test:
-  - go test -v
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - codecov -f "coverage.txt" -t %CODECOV_TOKEN% -n windows

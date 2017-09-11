@@ -1,14 +1,22 @@
-
 language: go
 go:
-- 1.9
+  - 1.9
+
+env:
+  global:
+    # CODECOV_TOKEN=
+    secure: VyQ0jA0jFXq68KUb6AqA65Q/8hA/hJnP4jyoFMPUhkNE7ABGcBmHlKyE+0XOuIRSbPnVB3zvti3GIY7xGRdc1RuQOMDfmE9o7HeiYyQmJIcYU2cPB2i7lnjymf6IHcw4UaRG15nyKcXYBbG83FLKOr6xP3BaqxgwpNUsxEo16o4bsXLNHMfuUOJyg+dx4lR0BJiXG4Y0NlOe+YadRXcPX+tTiGPgggx1TOasTv/U5zW3mfRX866/MdzjVBrIgT8f4NRVE8lz+WSm/KoUPd22yb0V6c6xU4p2fNwrIZEtTlnolwqTb/XKm66Ye1wnBDVzHwrYqrOmO7gWIHJDKN4bD9zjxsuwRIPMEpljAVdR5akSsVtarXcwSXdplCxl8EDDi79No98UyAvT0xZx/u04Gw8gHji4/l5mgYV5uW8EVwqUpwUB+bAZTn/nQrQrxk/JDCAepDzz3ZgTcbEmvJZNjidyeFdw6Rfr+iGwPUX5oQ5IymWawx1kUnerNh8DYjQaRxS/xGBQBuAMDRbiW7Ib2j9ny7XKfEwgZbqbN9S0DoZhe1fgp9HPa1uQzrHUkUj4FCVK3ZSCtP6EvWq1bi0Deno7iyxl7A4RSflhsTFIRfhcwJl9gBDQLRcR/e9XZ1ZWUMTvovu1phjgCiFAQvE3+hEI2D4IKL7EljjX2an29v0=
 
 install:
-  - cd $GOPATH/src/github.com/$TRAVIS_REPO_SLUG
-  - go get github.com/anacrolix/envpprof
-  - go get github.com/anacrolix/tagflag
-  - go get github.com/stretchr/testify/assert
-  - go build -i -v
+- cd $GOPATH/src/github.com/$TRAVIS_REPO_SLUG
+- go get github.com/anacrolix/envpprof
+- go get github.com/anacrolix/tagflag
+- go get github.com/stretchr/testify/assert
+- go get golang.org/x/tools/cmd/cover
+- go build -i -v
 
 script:
-  - go test -v
+  -  go test -race -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -n linux
