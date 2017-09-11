@@ -95,3 +95,25 @@ func TestDialTimeout(t *testing.T) {
 	t.Log(err)
 	assert.True(t, time.Now().Before(started.Add(2*time.Second)))
 }
+
+// Tests for windows compatibility.
+func TestRemoteAddr(t *testing.T) {
+	t.Parallel()
+	s, err := NewSocket("udp", "localhost:0")
+	require.NoError(t, err)
+	defer s.Close()
+	s2, err := NewSocket("udp", "localhost:0")
+	require.NoError(t, err)
+	defer s2.Close()
+	w := make(chan net.Conn)
+	go func() {
+		conn, err2 := s.Accept()
+		require.NoError(t, err2)
+		w <- conn
+	}()
+	left, err := s.DialTimeout(s.Addr().String(), time.Second)
+	require.NoError(t, err)
+	right := <-w
+	close(w)
+	require.Equal(t, left.RemoteAddr().String(), right.RemoteAddr().String())
+}
